@@ -32,17 +32,18 @@
         }
     });
       
-const save_data = {
-                type: jsPsychPipe,
-                action: "save",
-                experiment_id: "pEIpA6H3ZLvv",
-                filename: filename,
-                data_string: ()=>jsPsych.data.get().csv()
-              };
+
+    var save_data = {
+      type: jsPsychPipe,
+      action: "save",
+      experiment_id: "ZeuVHnMuPvjI",
+      filename: filename,
+      data_string: ()=>jsPsych.data.get().csv()
+    };
               
           /* create timeline */
     var timeline = [];
-    const subject_id = jsPsych.randomization.randomID(10);
+    var subject_id = jsPsych.randomization.randomID(10);
     var filename = "emoji_triplets_" + subject_id;
     
       
@@ -662,7 +663,7 @@ var demographics = {
     };
     timeline.push(id_age);
       
-  timeline.push(save_data);
+    timeline.push(save_data);
       
    var goodbye = {
       type: jsPsychHtmlButtonResponse,
