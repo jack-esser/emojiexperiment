@@ -667,19 +667,6 @@ var demographics = {
     timeline.push(id_age);
       
     timeline.push(save_data);
-    
-    fetch("https://pipe.jspsych.org/api/data/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "*/*",
-      },
-      body: JSON.stringify({
-        experimentID: "tIqSWITxvcMU",
-        filename: "UNIQUE_FILENAME.csv",
-        data: dataAsString,
-      }),
-    });
       
    var goodbye = {
       type: jsPsychHtmlButtonResponse,
