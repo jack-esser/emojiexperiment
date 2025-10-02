@@ -8,18 +8,18 @@
     <script src="https://unpkg.com/@jspsych/plugin-image-keyboard-response@1.1.0"></script>
     <script src="https://unpkg.com/@jspsych/plugin-image-button-response@1.1.0"></script>
     <script src="https://unpkg.com/@jspsych/plugin-fullscreen@1.1.0"></script>
-    <script src="https://unpkg.com/@jspsych/plugin-audio-button-response@1.1.0"></script>
-    <script src="https://unpkg.com/@jspsych/plugin-audio-keyboard-response@1.1.0"></script>
     <script src="https://unpkg.com/@jspsych/plugin-survey-multi-select@1.1.0"></script>
-    <script src="https://unpkg.com/@jspsych/plugin-survey-multi-choice@1.1.3"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey-multi-choice@2.0.0"></script>
     <script src="https://unpkg.com/@jspsych/plugin-survey-text@1.1.0"></script>
     <script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.1.0"></script>
     <script src="https://unpkg.com/@jspsych/plugin-survey-likert@1.1.0"></script>
     <script src="https://unpkg.com/@jspsych/plugin-call-function@1.1.0"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://unpkg.com/@jspsych/plugin-preload@1.1.0"></script>
     <link href="https://unpkg.com/jspsych@7.2.1/css/jspsych.css" rel="stylesheet" type="text/css" />
-    <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe"></script>
-      
+    <script src="https://unpkg.com/@jspsych/plugin-video-button-response@1.1.1"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-video-keyboard-response@1.1.1"></script>
+    <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe"></script>   
       
   </head>
   <body></body>
@@ -31,31 +31,24 @@
     var jsPsych = initJsPsych({
         show_progress_bar:true,
         on_data_update: function(){
-            var file = "emoji_triplets_" + subject_id;
             jsPsych.data.addProperties({worker_id: urlvar.workerId});
-            timeline.push(save_data);
-          
-        },
-        on_finish: function(){
-            var filename = "emoji_triplets_" + subject_id;
-            jsPsych.data.addProperties({worker_id: urlvar.workerId});
-            timeline.push(save_data);
         }
     });
-      
-const save_data = {
-                type: jsPsychPipe,
-                action: "save",
-                experiment_id: "pEIpA6H3ZLvv",
-                filename: filename,
-                data_string: ()=>jsPsych.data.get().csv()
-              };
-              
-          /* create timeline */
+
+    /* create timeline */
     var timeline = [];
-    const subject_id = jsPsych.randomization.randomID(10);
-    var filename = "emoji_triplets_" + subject_id;
     
+    const subject_id = jsPsych.randomization.randomID(10);
+    const filename = `emojis_${subject_id}_.csv`;
+    
+    const save_data = {
+      type: jsPsychPipe,
+      action: "save",
+      experiment_id: "tIqSWITxvcMU",
+      filename: filename,
+      data_string: ()=>jsPsych.data.get().csv()
+    };
+         
       
     // pulling info re: mechanical turk hit
       var urlvar = jsPsych.data.urlVariables();  
@@ -509,7 +502,7 @@ const save_data = {
     /* define consent trial */
     var consent = {
         type: jsPsychImageButtonResponse,
-        stimulus: "kc_lab_consent_SONA.png",
+        stimulus: "FITW_consent_SONA.jpg",
         choices: ["Consent & Continue"]
     };
     timeline.push(consent);
@@ -673,7 +666,7 @@ var demographics = {
     };
     timeline.push(id_age);
       
-
+    timeline.push(save_data);
       
    var goodbye = {
       type: jsPsychHtmlButtonResponse,
@@ -681,18 +674,13 @@ var demographics = {
         output = "Woohoo! You have finished the experiment. <br>";
       //    if(urlvar.workerId.length > 7){
      //         output = output + "<strong> Here is your secret code: " + secret_code + "</strong><br>";
-      // output = output + "You may now close this screen. Goodbye!<br><br>";
+      // output = output + "You may now close this screen by hitting 'esc'. Goodbye!<br><br>";
       return output;
       },
       choices: ["Complete Experiment"]    
    };
     timeline.push(goodbye);
 
-    timeline.push({
-          type: jsPsychFullscreen,
-          fullscreen_mode: false
-        });    
-      
     jsPsych.run(timeline);
 
 
